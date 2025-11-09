@@ -2,7 +2,6 @@ import streamlit as st
 import sqlite3
 import cv2
 import time
-from src.models.model import start_webcam,load_known_faces
 
 def webcam():
     # --- Database Setup ---
@@ -88,5 +87,57 @@ def webcam():
     elif choice == "Live View":
         st.subheader("🎦 Live Camera Feeds")
         cameras = get_cameras()
-        load_known_faces()
-        start_webcam(cameras)
+
+        if not cameras:
+            st.info("No cameras available. Please add one first.")
+        else:
+            # Track camera streaming states
+            if "camera_states" not in st.session_state:
+                st.session_state.camera_states = {}
+
+            for cam in cameras:
+                cam_id, cam_name, cam_location, cam_url = cam
+                st.markdown(f"### 📍 {cam_name} — {cam_location}")
+
+                # Initialize camera state if not set
+                if cam_id not in st.session_state.camera_states:
+                    st.session_state.camera_states[cam_id] = False
+
+                # Toggle button
+                toggle_label = "🟢 Stop Feed" if st.session_state.camera_states[cam_id] else "▶️ Start Feed"
+                if st.button(toggle_label, key=f"toggle_{cam_id}"):
+                    st.session_state.camera_states[cam_id] = not st.session_state.camera_states[cam_id]
+                    st.rerun()
+
+                # Show live feed if active
+                if st.session_state.camera_states[cam_id]:
+                    st.info(f"Streaming live from **{cam_name}**...")
+
+                    cap = cv2.VideoCapture(cam_url)
+                    stframe = st.empty()
+
+                    if not cap.isOpened():
+                        st.error("❌ Could not open stream. Please check the URL.")
+                        st.session_state.camera_states[cam_id] = False
+                        continue
+
+                    start_time = time.time()
+
+                    # Stream frames until stopped
+                    while st.session_state.camera_states[cam_id]:
+                        ret, frame = cap.read()
+                        if not ret:
+                            st.error("⚠️ Stream ended or not reachable.")
+                            break
+                        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                        stframe.image(frame, channels="RGB", use_container_width=True)
+                        time.sleep(0.03)
+
+                        # Auto-stop after 5 minutes to avoid hang
+                        if time.time() - start_time > 300:
+                            st.warning("⏹ Auto-stopped after 5 minutes to save resources.")
+                            st.session_state.camera_states[cam_id] = False
+                            break
+
+                    cap.release()
+                    st.rerun()

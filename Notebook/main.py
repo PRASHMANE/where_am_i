@@ -1,5 +1,5 @@
 import streamlit as st
-from add_info import add,add_student,get_all_students,get_student_by_roll,goto,update_student,remove_student
+from add_info import add_info,add_student,get_all_students,get_student_by_roll,goto,update_student,remove_student
 from cam import webcam
 from pathlib import Path
 import streamlit as st
@@ -8,18 +8,10 @@ from sqlite3 import Connection
 from datetime import datetime
 import time
 from home import home
-from dashboard import dashboard
-import cv2
-import numpy as np
-from insightface.app import FaceAnalysis
-import os
-from src.models.model import load_known_faces
 
 DB_PATH = "students.db"
 PHOTOS_DIR = Path("data")
 PHOTOS_DIR.mkdir(exist_ok=True)
-
-
 # --- Page setup ---
 st.set_page_config(page_title="Sky Blue Theme App", layout="wide")
 
@@ -136,228 +128,6 @@ html, body, [class*="css"]  { font-family: 'Poppins', sans-serif; }
 </style>
 """, unsafe_allow_html=True)
 
-
-st.markdown("""
-<style>
-/* ===== CARD STYLING ===== */
-.card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    padding: 20px 30px;
-    margin-bottom: 20px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(102, 252, 241, 0.3);
-    color: #00ffcc;
-    border: 1px solid rgba(0, 255, 204, 0.3);
-}
-
-/* ===== FORM INPUTS ===== */
-.stTextInput>div>div>input {
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-    border: 2px solid #00ffcc;
-    border-radius: 10px;
-    padding: 10px;
-}
-
-.stTextInput>div>div>input:focus {
-    outline: none;
-    border-color: #00bfa5;
-    box-shadow: 0 0 10px #00bfa5;
-}
-
-/* ===== FILE UPLOADER ===== */
-.stFileUploader>div>div>input {
-    border: 2px solid #00ffcc;
-    border-radius: 10px;
-    padding: 5px;
-    color: #fff;
-}
-
-/* ===== SUBMIT BUTTON ===== */
-.stButton>button {
-    background: linear-gradient(135deg, #00ffcc, #00bfa5);
-    color: black;
-    border-radius: 30px;
-    padding: 0.7rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    box-shadow: 0 0 20px #00ffcc, 0 0 40px #00bfa5;
-    transition: all 0.3s ease-in-out;
-    width: 100%;
-}
-
-.stButton>button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #00ffcc, 0 0 70px #00bfa5;
-}
-
-/* ===== BACK BUTTON ===== */
-.stButton>button.back-btn {
-    background: linear-gradient(135deg, #ff4d6d, #ff7a5c);
-    box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff7a5c;
-    color: white;
-}
-.stButton>button.back-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #ff4d6d, 0 0 70px #ff7a5c;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-/* ===== CARD STYLING ===== */
-.card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 25px 30px;
-    margin-bottom: 20px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
-    color: #00ffcc;
-    border: 1px solid rgba(0, 255, 204, 0.3);
-}
-
-/* ===== FORM INPUTS ===== */
-.stTextInput>div>div>input,
-.stTextInput>div>div>textarea {
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-    border: 2px solid #00ffcc;
-    border-radius: 12px;
-    padding: 10px 12px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.stTextInput>div>div>input:focus,
-.stTextInput>div>div>textarea:focus {
-    outline: none;
-    border-color: #00bfa5;
-    box-shadow: 0 0 10px #00bfa5;
-}
-
-/* ===== FILE UPLOADER ===== */
-.stFileUploader>div>div>input {
-    border: 2px solid #00ffcc;
-    border-radius: 12px;
-    padding: 5px;
-    color: #fff;
-}
-
-/* ===== BUTTONS ===== */
-.stButton>button {
-    background: linear-gradient(135deg, #00ffcc, #00bfa5);
-    color: black;
-    border-radius: 30px;
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    box-shadow: 0 0 20px #00ffcc, 0 0 40px #00bfa5;
-    transition: all 0.3s ease-in-out;
-    width: 100%;
-}
-
-.stButton>button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #00ffcc, 0 0 70px #00bfa5;
-}
-
-/* ===== BACK BUTTON ===== */
-.stButton>button.back-btn {
-    background: linear-gradient(135deg, #ff4d6d, #ff7a5c);
-    box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff7a5c;
-    color: white;
-}
-.stButton>button.back-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #ff4d6d, 0 0 70px #ff7a5c;
-}
-</style>
-""", unsafe_allow_html=True)
-
-st.markdown("""
-<style>
-/* ===== CARD STYLING ===== */
-.card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 25px 30px;
-    margin-bottom: 20px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
-    color: #00ffcc;
-    border: 1px solid rgba(0, 255, 204, 0.3);
-}
-
-/* ===== FORM INPUTS ===== */
-.stTextInput>div>div>input,
-.stTextInput>div>div>textarea {
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-    border: 2px solid #00ffcc;
-    border-radius: 12px;
-    padding: 10px 12px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.stTextInput>div>div>input:focus,
-.stTextInput>div>div>textarea:focus {
-    outline: none;
-    border-color: #00bfa5;
-    box-shadow: 0 0 10px #00bfa5;
-}
-
-/* ===== FILE UPLOADER ===== */
-.stFileUploader>div>div>input {
-    border: 2px solid #00ffcc;
-    border-radius: 12px;
-    padding: 5px;
-    color: #fff;
-}
-
-/* ===== BUTTONS ===== */
-.stButton>button {
-    background: linear-gradient(135deg, #00ffcc, #00bfa5);
-    color: black;
-    border-radius: 30px;
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    box-shadow: 0 0 20px #00ffcc, 0 0 40px #00bfa5;
-    transition: all 0.3s ease-in-out;
-    width: 100%;
-}
-
-.stButton>button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #00ffcc, 0 0 70px #00bfa5;
-}
-
-/* ===== BACK BUTTON ===== */
-.stButton>button.back-btn {
-    background: linear-gradient(135deg, #ff4d6d, #ff7a5c);
-    box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff7a5c;
-    color: white;
-}
-.stButton>button.back-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #ff4d6d, 0 0 70px #ff7a5c;
-}
-</style>
-""", unsafe_allow_html=True)
-
-
-
-
 # --- Initialize page state ---
 if "page" not in st.session_state:
     st.session_state.page = "home"
@@ -376,7 +146,7 @@ if st.session_state.page == "home":
     home()
 
 elif st.session_state.page == "addinfo":
-    add()
+    add_info()
 
 elif st.session_state.page == "scanner":
     webcam()
@@ -388,6 +158,11 @@ elif st.session_state.page == "chatbot":
         st.write(f"🤖 Bot: You said '{user_input}' — reply coming soon!")
 
 elif st.session_state.page == "add":
+    #st.title("➕ Add Student")
+    #st.write("This is the Add Student page.")
+    #def goto(page):
+     #   st.query_params['page'] = page
+      #  st.rerun()
     st.markdown("<div class='card'><h3>➕ Add Student</h3></div>", unsafe_allow_html=True)
     st.markdown("\n")
     with st.form("form_add", clear_on_submit=False):
@@ -401,24 +176,20 @@ elif st.session_state.page == "add":
             photo_path = None
             if photo:
                 ext = Path(photo.name).suffix
-                #safe_name = f"{roll}_{int(time.time())}{ext}"
-                safe_name =f"{roll}.png"
+                safe_name = f"{roll}_{int(time.time())}{ext}"
                 out = PHOTOS_DIR / safe_name
                 with open(out, "wb") as f:
                     f.write(photo.getbuffer())
                 photo_path = str(out)
             ok, err = add_student(name, roll, dept, year, photo_path)
             if ok:
-                load_known_faces()
                 st.success("✅ Student added.")
                 st.rerun()
             else:
                 st.error(f"❌ Could not add: {err}")
 
-    if st.button("⬅ Back", key="back_button"):
-        st.markdown("<style>button[data-baseweb] {background: linear-gradient(135deg, #ff4d6d, #ff7a5c);}</style>", unsafe_allow_html=True)
+    if st.button("⬅ Back"):
         goto("addinfo")
-
 
 elif st.session_state.page == "view":
     st.markdown("<div class='card'><h3>🧾 All Students</h3></div>", unsafe_allow_html=True)
@@ -513,18 +284,7 @@ elif st.session_state.page == "remove":
     st.markdown("<div class='card'><h3>🗑️ Remove Student</h3></div>", unsafe_allow_html=True)
     st.markdown("\n")
     roll = st.text_input("Enter Roll Number to remove", key="rm_roll")
-    roll1 = get_student_by_roll(roll)
     if st.button("Remove"):
-        if roll1:
-        #print(roll1)
-            path = f"data/{roll1[2]}.png"
-            if os.path.exists(path):
-                os.remove(path)
-                print("🗑️ Image deleted successfully!")
-            else:
-                print("⚠️ File not found!")
-        else:
-            print("data not fetch")
         changed = remove_student(roll)
         if changed:
             st.success("✅ Student removed.")
@@ -532,9 +292,6 @@ elif st.session_state.page == "remove":
             st.warning("No student found with that roll.")
     if st.button("⬅ Back"):
         goto("addinfo")
-
-elif st.session_state.page == "dashboard":
-    dashboard()
 
 
 # --- Active icon handler ---

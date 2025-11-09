@@ -5,6 +5,7 @@ from sqlite3 import Connection
 from pathlib import Path
 import time
 from datetime import datetime
+import os
 
 # -------------------------
 # Config & Setup
@@ -143,7 +144,7 @@ def get_student_by_roll(roll):
 # -------------------------
 # Add Info Page
 # -------------------------
-def add_info():
+def add():
     st.markdown("""
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -309,7 +310,16 @@ def add_info():
     elif st.session_state.page == "remove":
         st.subheader("🗑️ Remove Student")
         roll = st.text_input("Enter Roll Number to remove")
+        roll1 = get_student_by_roll(roll)
+        print(roll1)
+    
         if st.button("Remove"):
+            path = f"data/{roll1[2]}.png"
+            if os.path.exists(path):
+                os.remove(path)
+                print("🗑️ Image deleted successfully!")
+            else:
+                print("⚠️ File not found!")
             changed = remove_student(roll)
             if changed:
                 st.success("✅ Student removed.")
