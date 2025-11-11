@@ -27,6 +27,14 @@ html, body, [class*="css"]  { font-family: 'Poppins', sans-serif; }
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
   transition: transform .18s ease, box-shadow .18s ease;
 }
+.title {
+        text-align: center;
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: #00b4d8;
+        text-shadow: 0 0 25px #00b4d8;
+        margin-top: 40px;
+    }
 .card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
 .btn-glow {
   border-radius: 10px;
@@ -165,6 +173,14 @@ def add():
     font-weight:600;
     box-shadow: 0 6px 20px rgba(0,150,255,0.12);
     }
+    .title {
+        text-align: center;
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: #00b4d8;
+        text-shadow: 0 0 25px #00b4d8;
+        margin-top: 40px;
+    }
     .small-muted { color: #9aa0a6; font-size:13px; }
     .material {
     vertical-align: middle;
@@ -174,12 +190,45 @@ def add():
     .logo {
     display:inline-flex; align-items:center; gap:10px; margin-bottom:6px;
     }
+    .card-title {
+        color: #90e0ef;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
     </style>
     """, unsafe_allow_html=True)
+    st.markdown("""
+<style>
+/* Target Streamlit input labels */
+.stTextInput label, .stTextInput div[data-testid="stMarkdownContainer"] p {
+    color: #00b4d8 !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 15px #00b4d8;
+    letter-spacing: 1px;
+}
+
+/* Input box styling */
+.stTextInput > div > div > input {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid #00b4d8;
+    border-radius: 10px;
+    padding: 10px 14px;
+    transition: 0.3s ease;
+}
+
+.stTextInput > div > div > input:focus {
+    border-color: #48cae4;
+    box-shadow: 0 0 15px #48cae4;
+}
+</style>
+""", unsafe_allow_html=True)
     init_db()  # ensure DB is initialized
 
     with st.container():
-        st.markdown('<div class="logo"><span style="font-size:26px">🎓</span><div><div style="font-size:18px;font-weight:700">Student Manager</div><div class="small-muted">CRUD • SQLite • Photos • Streamlit</div></div></div>', unsafe_allow_html=True)
+        #st.markdown('<div class="logo"><span style="font-size:26px">🎓</span><div><div style="font-size:18px;font-weight:700">Student Manager</div><div class="small-muted">CRUD • SQLite • Photos • Streamlit</div></div></div>', unsafe_allow_html=True)
+        st.markdown('<div class="title">🎓 Student Information Management </div>', unsafe_allow_html=True)
     # Page header
     #st.markdown('<div style="font-size:26px;font-weight:700">🎓 Student Manager</div>', unsafe_allow_html=True)
     #st.markdown('<div class="small-muted">CRUD • SQLite • Photos • Streamlit</div>', unsafe_allow_html=True)

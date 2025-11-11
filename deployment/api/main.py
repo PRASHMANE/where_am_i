@@ -21,7 +21,7 @@ PHOTOS_DIR.mkdir(exist_ok=True)
 
 
 # --- Page setup ---
-st.set_page_config(page_title="Sky Blue Theme App", layout="wide")
+st.set_page_config(page_title="Dark Theme App", layout="wide")
 
 # --- Load Material Icons ---
 st.markdown("""
@@ -29,37 +29,37 @@ st.markdown("""
           rel="stylesheet" />
 """, unsafe_allow_html=True)
 
-# --- Sky Blue Theme CSS ---
+# --- Dark Theme CSS ---
 st.markdown("""
     <style>
-    /* === Full Screen Sky Blue Background === */
+    /* === Full Screen Dark Background === */
     html, body, [class*="stApp"], .main, .block-container {
-        background-color: #87ceeb !important; /* sky blue */
-        color: #0a0a0a !important; /* dark text for readability */
+        background-color: #0d1117 !important; /* deep dark gray */
+        color: #e6edf3 !important; /* light text for readability */
     }
 
     /* Widget styling */
     .stTextInput > div > div > input,
     .stNumberInput > div > input {
-        background-color: #b0e0e6 !important; /* lighter sky blue for inputs */
-        color: #0a0a0a !important;
-        border: 1px solid #1e90ff !important;
+        background-color: #161b22 !important; 
+        color: #e6edf3 !important;
+        border: 1px solid #30363d !important;
         border-radius: 10px !important;
         padding: 0.5rem 0.75rem !important;
     }
 
     .stButton>button {
-        background: #1e90ff !important; /* dodger blue button */
-        color: white !important;
+        background: linear-gradient(135deg, #00bfa5, #00ffcc) !important;
+        color: black !important;
         border: none !important;
         border-radius: 10px !important;
         padding: 0.6rem 1.2rem !important;
         transition: 0.3s ease-in-out;
+        font-weight: 600;
     }
     .stButton>button:hover {
-        background: #00bfff !important; /* deep sky blue on hover */
         transform: scale(1.05);
-        box-shadow: 0 0 15px #00bfff;
+        box-shadow: 0 0 15px #00ffcc;
     }
 
     /* Bottom Navigation */
@@ -68,8 +68,8 @@ st.markdown("""
         bottom: 0;
         left: 0;
         width: 100%;
-        background: #87ceeb; /* solid sky blue */
-        border-top: 1px solid #1e90ff;
+        background: #161b22;
+        border-top: 1px solid #30363d;
         display: flex;
         justify-content: space-around;
         align-items: center;
@@ -80,22 +80,22 @@ st.markdown("""
     .material-symbols-outlined {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
         font-size: 30px;
-        color: #0a0a0a;
+        color: #8b949e;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         padding: 8px;
         border-radius: 50%;
     }
     .material-symbols-outlined:hover {
-        color: #ffffff;
+        color: #00ffcc;
         transform: scale(1.2);
-        text-shadow: 0 0 12px #1e90ff;
-        background: rgba(30,144,255,0.3);
+        text-shadow: 0 0 12px #00bfa5;
+        background: rgba(0,255,204,0.15);
     }
     .active {
-        color: #ffffff !important;
-        text-shadow: 0 0 16px #1e90ff;
-        background: rgba(30,144,255,0.3);
+        color: #00ffcc !important;
+        text-shadow: 0 0 16px #00ffcc;
+        background: rgba(0,255,204,0.15);
         transform: scale(1.25);
     }
 
@@ -104,6 +104,7 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
+
 st.markdown("""
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -111,18 +112,18 @@ st.markdown("""
 html, body, [class*="css"]  { font-family: 'Poppins', sans-serif; }
 .appview-container .main .block-container{ padding-top:1rem; }
 .card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.02));
+  background: rgba(255,255,255,0.05);
   border-radius: 12px;
   padding: 18px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
   transition: transform .18s ease, box-shadow .18s ease;
 }
-.card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
+.card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,255,204,0.2); }
 .btn-glow {
   border-radius: 10px;
   padding: 10px 14px;
   font-weight:600;
-  box-shadow: 0 6px 20px rgba(0,150,255,0.12);
+  box-shadow: 0 6px 20px rgba(0,255,204,0.12);
 }
 .small-muted { color: #9aa0a6; font-size:13px; }
 .material {
@@ -139,7 +140,6 @@ html, body, [class*="css"]  { font-family: 'Poppins', sans-serif; }
 
 st.markdown("""
 <style>
-/* ===== CARD STYLING ===== */
 .card {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
@@ -147,12 +147,11 @@ st.markdown("""
     margin-bottom: 20px;
     text-align: center;
     backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(102, 252, 241, 0.3);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
     color: #00ffcc;
-    border: 1px solid rgba(0, 255, 204, 0.3);
+    border: 1px solid rgba(0, 255, 204, 0.2);
 }
 
-/* ===== FORM INPUTS ===== */
 .stTextInput>div>div>input {
     background: rgba(255,255,255,0.05);
     color: #fff;
@@ -161,21 +160,6 @@ st.markdown("""
     padding: 10px;
 }
 
-.stTextInput>div>div>input:focus {
-    outline: none;
-    border-color: #00bfa5;
-    box-shadow: 0 0 10px #00bfa5;
-}
-
-/* ===== FILE UPLOADER ===== */
-.stFileUploader>div>div>input {
-    border: 2px solid #00ffcc;
-    border-radius: 10px;
-    padding: 5px;
-    color: #fff;
-}
-
-/* ===== SUBMIT BUTTON ===== */
 .stButton>button {
     background: linear-gradient(135deg, #00ffcc, #00bfa5);
     color: black;
@@ -188,174 +172,90 @@ st.markdown("""
     transition: all 0.3s ease-in-out;
     width: 100%;
 }
-
-.stButton>button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #00ffcc, 0 0 70px #00bfa5;
+</style>
+""", unsafe_allow_html=True)
+st.markdown("""
+<style>
+/* Style all text input labels */
+div[data-baseweb="input"] label {
+    color: #00b4d8 !important;        /* label color */
+    font-size: 1.2rem !important;     /* slightly larger */
+    font-weight: 600 !important;      /* make it bold */
+    text-shadow: 0 0 10px #00b4d8;    /* glowing effect */
+    letter-spacing: 1px;              /* spacing for modern look */
 }
 
-/* ===== BACK BUTTON ===== */
-.stButton>button.back-btn {
-    background: linear-gradient(135deg, #ff4d6d, #ff7a5c);
-    box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff7a5c;
-    color: white;
+/* Optional: style the input box itself */
+.stTextInput>div>div>input {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border-radius: 10px;
+    border: 1px solid #00b4d8;
+    padding: 10px 14px;
+    transition: 0.3s;
 }
-.stButton>button.back-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #ff4d6d, 0 0 70px #ff7a5c;
+.stTextInput>div>div>input:focus {
+    border-color: #48cae4;
+    box-shadow: 0 0 10px #48cae4;
 }
 </style>
 """, unsafe_allow_html=True)
 
 st.markdown("""
 <style>
-/* ===== CARD STYLING ===== */
-.card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 25px 30px;
-    margin-bottom: 20px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
-    color: #00ffcc;
-    border: 1px solid rgba(0, 255, 204, 0.3);
+.custom-label {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #00b4d8;
+    text-shadow: 0 0 10px #00b4d8;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
 }
 
-/* ===== FORM INPUTS ===== */
-.stTextInput>div>div>input,
-.stTextInput>div>div>textarea {
-    background: rgba(255,255,255,0.05);
+/* Input box styling */
+.stTextInput>div>div>input {
+    background: rgba(255,255,255,0.1);
     color: #fff;
-    border: 2px solid #00ffcc;
-    border-radius: 12px;
-    padding: 10px 12px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    border-radius: 10px;
+    border: 1px solid #00b4d8;
+    padding: 10px 14px;
+    transition: 0.3s;
 }
-
-.stTextInput>div>div>input:focus,
-.stTextInput>div>div>textarea:focus {
-    outline: none;
-    border-color: #00bfa5;
-    box-shadow: 0 0 10px #00bfa5;
-}
-
-/* ===== FILE UPLOADER ===== */
-.stFileUploader>div>div>input {
-    border: 2px solid #00ffcc;
-    border-radius: 12px;
-    padding: 5px;
-    color: #fff;
-}
-
-/* ===== BUTTONS ===== */
-.stButton>button {
-    background: linear-gradient(135deg, #00ffcc, #00bfa5);
-    color: black;
-    border-radius: 30px;
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    box-shadow: 0 0 20px #00ffcc, 0 0 40px #00bfa5;
-    transition: all 0.3s ease-in-out;
-    width: 100%;
-}
-
-.stButton>button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #00ffcc, 0 0 70px #00bfa5;
-}
-
-/* ===== BACK BUTTON ===== */
-.stButton>button.back-btn {
-    background: linear-gradient(135deg, #ff4d6d, #ff7a5c);
-    box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff7a5c;
-    color: white;
-}
-.stButton>button.back-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #ff4d6d, 0 0 70px #ff7a5c;
+.stTextInput>div>div>input:focus {
+    border-color: #48cae4;
+    box-shadow: 0 0 10px #48cae4;
 }
 </style>
 """, unsafe_allow_html=True)
-
 st.markdown("""
 <style>
-/* ===== CARD STYLING ===== */
-.card {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    padding: 25px 30px;
-    margin-bottom: 20px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
-    color: #00ffcc;
-    border: 1px solid rgba(0, 255, 204, 0.3);
+/* Target Streamlit input labels */
+.stTextInput label, .stTextInput div[data-testid="stMarkdownContainer"] p {
+    color: #00b4d8 !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 15px #00b4d8;
+    letter-spacing: 1px;
 }
 
-/* ===== FORM INPUTS ===== */
-.stTextInput>div>div>input,
-.stTextInput>div>div>textarea {
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-    border: 2px solid #00ffcc;
-    border-radius: 12px;
-    padding: 10px 12px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.stTextInput>div>div>input:focus,
-.stTextInput>div>div>textarea:focus {
-    outline: none;
-    border-color: #00bfa5;
-    box-shadow: 0 0 10px #00bfa5;
-}
-
-/* ===== FILE UPLOADER ===== */
-.stFileUploader>div>div>input {
-    border: 2px solid #00ffcc;
-    border-radius: 12px;
-    padding: 5px;
-    color: #fff;
-}
-
-/* ===== BUTTONS ===== */
-.stButton>button {
-    background: linear-gradient(135deg, #00ffcc, #00bfa5);
-    color: black;
-    border-radius: 30px;
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    box-shadow: 0 0 20px #00ffcc, 0 0 40px #00bfa5;
-    transition: all 0.3s ease-in-out;
-    width: 100%;
-}
-
-.stButton>button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #00ffcc, 0 0 70px #00bfa5;
-}
-
-/* ===== BACK BUTTON ===== */
-.stButton>button.back-btn {
-    background: linear-gradient(135deg, #ff4d6d, #ff7a5c);
-    box-shadow: 0 0 20px #ff4d6d, 0 0 40px #ff7a5c;
+/* Input box styling */
+.stTextInput > div > div > input {
+    background: rgba(255,255,255,0.1);
     color: white;
+    border: 1px solid #00b4d8;
+    border-radius: 10px;
+    padding: 10px 14px;
+    transition: 0.3s ease;
 }
-.stButton>button.back-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px #ff4d6d, 0 0 70px #ff7a5c;
+
+.stTextInput > div > div > input:focus {
+    border-color: #48cae4;
+    box-shadow: 0 0 15px #48cae4;
 }
 </style>
 """, unsafe_allow_html=True)
-
-
 
 
 # --- Initialize page state ---
@@ -371,8 +271,6 @@ if "page" in query_params:
 
 # --- Content ---
 if st.session_state.page == "home":
-    #st.title("🏠 Home")
-    #st.write("Welcome to the **sky-blue theme** dashboard ✨")
     home()
 
 elif st.session_state.page == "addinfo":
@@ -388,6 +286,33 @@ elif st.session_state.page == "chatbot":
         st.write(f"🤖 Bot: You said '{user_input}' — reply coming soon!")
 
 elif st.session_state.page == "add":
+    st.markdown("""
+<style>
+/* Target Streamlit input labels */
+.stTextInput label, .stTextInput div[data-testid="stMarkdownContainer"] p {
+    color: #00b4d8 !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 15px #00b4d8;
+    letter-spacing: 1px;
+}
+
+/* Input box styling */
+.stTextInput > div > div > input {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid #00b4d8;
+    border-radius: 10px;
+    padding: 10px 14px;
+    transition: 0.3s ease;
+}
+
+.stTextInput > div > div > input:focus {
+    border-color: #48cae4;
+    box-shadow: 0 0 15px #48cae4;
+}
+</style>
+""", unsafe_allow_html=True)
     st.markdown("<div class='card'><h3>➕ Add Student</h3></div>", unsafe_allow_html=True)
     st.markdown("\n")
     with st.form("form_add", clear_on_submit=False):
@@ -537,7 +462,6 @@ elif st.session_state.page == "dashboard":
     dashboard()
 
 
-# --- Active icon handler ---
 def icon_class(page):
     return "material-symbols-outlined active" if st.session_state.page == page else "material-symbols-outlined"
 

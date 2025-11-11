@@ -5,6 +5,75 @@ import time
 from src.models.model import start_webcam,load_known_faces
 
 def webcam():
+    st.markdown("""
+<style>
+.title {
+    text-align: center;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #00b4d8;
+    text-shadow: 0 0 25px #00b4d8;
+    margin-top: 40px;
+}
+</style>
+""", unsafe_allow_html=True)
+    
+    st.markdown("""
+<style>
+.custom-label {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #00b4d8;
+    text-shadow: 0 0 10px #00b4d8;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+}
+
+/* Input box styling */
+.stTextInput>div>div>input {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border-radius: 10px;
+    border: 1px solid #00b4d8;
+    padding: 10px 14px;
+    transition: 0.3s;
+}
+.stTextInput>div>div>input:focus {
+    border-color: #48cae4;
+    box-shadow: 0 0 10px #48cae4;
+}
+</style>
+""", unsafe_allow_html=True)
+
+    st.markdown("""
+<style>
+/* Target Streamlit input labels */
+.stTextInput label, .stTextInput div[data-testid="stMarkdownContainer"] p {
+    color: #00b4d8 !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    text-shadow: 0 0 15px #00b4d8;
+    letter-spacing: 1px;
+}
+
+/* Input box styling */
+.stTextInput > div > div > input {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid #00b4d8;
+    border-radius: 10px;
+    padding: 10px 14px;
+    transition: 0.3s ease;
+}
+
+.stTextInput > div > div > input:focus {
+    border-color: #48cae4;
+    box-shadow: 0 0 15px #48cae4;
+}
+</style>
+""", unsafe_allow_html=True)
     # --- Database Setup ---
     def init_db():
         conn = sqlite3.connect("camera_db.db")
@@ -42,7 +111,8 @@ def webcam():
 
     # --- Streamlit UI Setup ---
     #st.set_page_config(page_title="Camera Manager", layout="wide")
-    st.title("🎥 Camera Management Dashboard")
+    #st.title("🎥 Camera Management Dashboard")
+    st.markdown('<div class="title">🎥 Camera Management Dashboard</div>', unsafe_allow_html=True)
     st.markdown("Manage your camera URLs and view live streams instantly!")
 
     menu = ["Add Camera", "View Cameras", "Live View"]
