@@ -8,6 +8,7 @@ import time
 from deployment.api.add_info import get_student_by_roll 
 from datetime import datetime
 from deployment.api.write_att import write_attendance
+from src.models.f import filter_img
 
 # =====================
 # PAGE CONFIG
@@ -53,7 +54,7 @@ def load_known_faces(known_dir="data"):
     #return known_faces, known_embeddings
 
 #known_faces, known_embeddings = load_known_faces()
-
+load_known_faces()
 # =====================
 # UTILITY FUNCTION
 # =====================
@@ -104,7 +105,7 @@ def start_webcam(cameras):
                     if not ret:
                         st.error("⚠️ Stream ended or not reachable.")
                         break
-
+                    frame=filter_img(frame)
                     faces = app.get(frame)
 
                     for face in faces:

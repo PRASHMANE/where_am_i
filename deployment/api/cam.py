@@ -88,5 +88,5 @@ def webcam():
     elif choice == "Live View":
         st.subheader("🎦 Live Camera Feeds")
         cameras = get_cameras()
-        load_known_faces()
+        #load_known_faces()
         start_webcam(cameras)
