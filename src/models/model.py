@@ -29,6 +29,8 @@ def load_face_model():
 
 app = load_face_model()
 track=[]
+track1=[]
+place=["libraray","coridor","ground","canteen"]
 
 # =====================
 # LOAD KNOWN FACES
@@ -139,7 +141,7 @@ def start_webcam(cameras):
                                     cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
 
-                        if label not in track:
+                        if label not in track and cam_location not in place: 
                             row=get_student_by_roll(label)
                             track.append(label)
                             if row:
@@ -148,6 +150,13 @@ def start_webcam(cameras):
                             else:
                                 print("❌ No student record found for this roll.")
                         #write_attendance(row[1],row[0],datetime.now(),"Present")
+                        elif label not in track and  cam_location in place:
+                            row=get_student_by_roll(label)
+                            track1.append(label)
+                            if row:
+                                sid, name1, roll, dept, year, photo_path, updated = row
+                                write_remark(roll, name1, datetime.now(),cam_location)
+
 
                     cv2.putText(frame, f"Faces: {len(faces)}", (10, 30),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
