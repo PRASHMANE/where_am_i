@@ -19,6 +19,22 @@ try:
 except FileNotFoundError:
         st.error(f"❌ File '{CSV_FILE}' not found in current directory")
 
+CSV_FILE1 = "deployment/api/Remark/remark.csv"
+try:
+        # Load attendance sheet
+    df1 = pd.read_csv(CSV_FILE1)
+
+        # ✅ Normalize column names
+    df1.columns = df1.columns.str.strip().str.title()
+
+        # ✅ Ensure Date column is proper datetime if it exists
+    if 'Date' in df.columns:
+        df1['Date'] = pd.to_datetime(df1['Date'], errors='coerce').dt.date
+
+except FileNotFoundError:
+        st.error(f"❌ File '{CSV_FILE1}' not found in current directory")
+
+
 
 
 def select1(usn):
@@ -149,7 +165,7 @@ def select1(usn):
             if selected_date and 'Date' in df.columns:
                 filtered_df = filtered_df[filtered_df['Date'] == selected_date]
 
-            st.subheader("📋 Filtered Attendance")
+            st.subheader("📋 Student Attendance")
             st.dataframe(filtered_df, use_container_width=True)
 
             # Summary for filtered data
@@ -168,4 +184,20 @@ def select1(usn):
                 st.info("ℹ️ No attendance records match the filter.")
 
     elif mode == "🔍 student Remark":
-        pass
+            student_list = df1['Usn'].unique() if 'Usn' in df1.columns else []
+            selected_student = st.sidebar.selectbox("Select Student (USN)", options=[usn] + list(student_list))
+
+            # ✅ Filter by Date using a calendar picker (only if Date column exists)
+            selected_date = None
+            if 'Date' in df1.columns:
+                selected_date = st.sidebar.date_input("Select Date", value=None)
+
+            # Apply filters
+            filtered_df = df1.copy()
+            if selected_student != "All" and 'Usn' in df1.columns:
+                filtered_df = filtered_df[filtered_df['Usn'] == selected_student]
+            if selected_date and 'Date' in df.columns:
+                filtered_df = filtered_df[filtered_df['Date'] == selected_date]
+
+            st.subheader("📋 Student Remark")
+            st.dataframe(filtered_df, use_container_width=True)

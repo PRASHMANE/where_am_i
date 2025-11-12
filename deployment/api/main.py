@@ -456,7 +456,7 @@ elif st.session_state.page == "remove":
         else:
             st.warning("No student found with that roll.")
     if st.button("⬅ Back"):
-        goto("addinfo")
+        goto("view")
 
 elif st.session_state.page == "dashboard":
     dashboard()
@@ -466,7 +466,8 @@ elif st.session_state.page == "show":
         #st.write(f"Welcome back, {st.session_state['user_name']}!")
         usn=st.session_state['user_name']
         select1(usn)
-
+    if st.button("⬅ Back"):
+        goto("addinfo")
 
 def icon_class(page):
     return "material-symbols-outlined active" if st.session_state.page == page else "material-symbols-outlined"
