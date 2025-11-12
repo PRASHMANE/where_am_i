@@ -15,6 +15,7 @@ from insightface.app import FaceAnalysis
 import os
 from src.models.model import load_known_faces
 from attendance import attendance_display
+from show import select1
 
 DB_PATH = "students.db"
 PHOTOS_DIR = Path("data")
@@ -385,7 +386,8 @@ elif st.session_state.page == "view":
             with cols[2]:
                 st.markdown("\n")
                 if st.button("Select", key=f"select_{sid}"):
-                    st.session_state.page = "home"
+                    st.session_state["user_name"] = roll
+                    st.query_params['page'] = "show"
                     st.rerun()
             st.write("---")
 
@@ -458,6 +460,12 @@ elif st.session_state.page == "remove":
 
 elif st.session_state.page == "dashboard":
     dashboard()
+
+elif st.session_state.page == "show":
+    if "user_name" in st.session_state:
+        #st.write(f"Welcome back, {st.session_state['user_name']}!")
+        usn=st.session_state['user_name']
+        select1(usn)
 
 
 def icon_class(page):

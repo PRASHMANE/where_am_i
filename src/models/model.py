@@ -8,6 +8,7 @@ import time
 from deployment.api.add_info import get_student_by_roll 
 from datetime import datetime
 from deployment.api.write_att import write_attendance
+from deployment.api.write_remark import write_remark
 from src.models.f import filter_img
 
 # =====================
@@ -27,6 +28,7 @@ def load_face_model():
     return app
 
 app = load_face_model()
+track=[]
 
 # =====================
 # LOAD KNOWN FACES
@@ -121,16 +123,30 @@ def start_webcam(cameras):
                                 best_score = score
                                 best_match = name
 
-                        label = best_match if best_score > 0.60 else "Unknown"
-                        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                        cv2.putText(frame, f"{label} ({best_score:.2f})", (x1, y1 - 10),
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
-                        row=get_student_by_roll(label)
-                        if row:
-                            sid, name1, roll, dept, year, photo_path, updated = row
-                            write_attendance(roll, name1, datetime.now(), "Present")
+                        #label = best_match if best_score > 0.60 else "Unknown"
+                        #cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                        #cv2.putText(frame, f"{label} ({best_score:.2f})", (x1, y1 - 10),
+                         #       cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+                        if best_score > 0.60 :
+                            label = best_match
+                            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                            cv2.putText(frame, f"{label} ({best_score:.2f})", (x1, y1 - 10),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 255, 0), 3)
                         else:
-                            print("❌ No student record found for this roll.")
+                            label = "Unknown"
+                            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0,255), 2)
+                            cv2.putText(frame, label, (x1, y1 - 10),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
+
+
+                        if label not in track:
+                            row=get_student_by_roll(label)
+                            track.append(label)
+                            if row:
+                                sid, name1, roll, dept, year, photo_path, updated = row
+                                write_attendance(roll, name1, datetime.now(), "Present")
+                            else:
+                                print("❌ No student record found for this roll.")
                         #write_attendance(row[1],row[0],datetime.now(),"Present")
 
                     cv2.putText(frame, f"Faces: {len(faces)}", (10, 30),

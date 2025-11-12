@@ -15,7 +15,7 @@ def attendance_display():
         # ✅ Normalize column names
         df.columns = df.columns.str.strip().str.title()
 
-        # ✅ Ensure Date column is proper datetime if it exists
+    # ✅ Ensure Date column is proper datetime if it exists
         if 'Date' in df.columns:
             df['Date'] = pd.to_datetime(df['Date'], errors='coerce').dt.date
 
