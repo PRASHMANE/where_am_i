@@ -14,6 +14,7 @@ import numpy as np
 from insightface.app import FaceAnalysis
 import os
 from src.models.model import load_known_faces
+from attendance import attendance_display
 
 DB_PATH = "students.db"
 PHOTOS_DIR = Path("data")
@@ -280,10 +281,7 @@ elif st.session_state.page == "scanner":
     webcam()
 
 elif st.session_state.page == "chatbot":
-    st.title("💬 Chat Bot")
-    user_input = st.text_input("Ask something:")
-    if user_input:
-        st.write(f"🤖 Bot: You said '{user_input}' — reply coming soon!")
+    attendance_display()
 
 elif st.session_state.page == "add":
     st.markdown("""
