@@ -333,8 +333,9 @@ elif st.session_state.page == "add":
                 photo_path = str(out)
             ok, err = add_student(name, roll, dept, year, photo_path)
             if ok:
-                load_known_faces()
+                
                 st.success("✅ Student added.")
+                load_known_faces()
                 st.rerun()
             else:
                 st.error(f"❌ Could not add: {err}")
@@ -419,7 +420,7 @@ elif st.session_state.page == "update":
                 photo_path_new = None
                 if photo:
                     ext = Path(photo.name).suffix
-                    safe_name = f"{roll}_{int(time.time())}{ext}"
+                    safe_name = f"{roll}.png"
                     out = PHOTOS_DIR / safe_name
                     with open(out, "wb") as f:
                         f.write(photo.getbuffer())

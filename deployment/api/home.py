@@ -3,6 +3,7 @@ from streamlit_lottie import st_lottie
 import requests
 import os
 import base64
+from src.models.model import load_known_faces
 
 #st.set_page_config(page_title="Where Am I | Cambridge North Campus", page_icon="🎓", layout="wide")
 def home():
@@ -155,7 +156,7 @@ def home():
         st.markdown("""
         <div class='card'>
             <div class='card-title'>🏫 Institution</div>
-            <div class='card-text'>Developed at Cambridge Institute of Technology, North Campus - Department of CSE.</div>
+            <div class='card-text'>Developed at Cambridge Institute of Technology NC - Department of CSE.</div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -193,6 +194,12 @@ def home():
         if st.button("🚀 Go to Dashboard"):
             #st.switch_page("pages/dashboard.py")
             st.query_params['page'] = "dashboard"
+
+    with colz:
+        if st.button("🧠 Re-Training Model"):
+            load_known_faces()
+            #st.warning("⚠️ Re-Training functionality is under development. Stay tuned for updates!")
+            st.success("✅ Model re-trained successfully with updated student data.")
 
 
     # ===== Footer =====

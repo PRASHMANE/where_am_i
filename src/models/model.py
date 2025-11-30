@@ -30,7 +30,7 @@ def load_face_model():
 app = load_face_model()
 track=[]
 track1=[]
-place=["libraray","coridor","ground","canteen"]
+
 
 # =====================
 # LOAD KNOWN FACES
@@ -52,11 +52,12 @@ def load_known_faces(known_dir="data"):
                 emb = faces[0].normed_embedding
                 known_faces[name] = emb
                 known_embeddings.append((name, emb))
+                print("✅ Loaded face ")
             else:
                 #st.warning(f"No face found in {file}")
                 pass
     #return known_faces, known_embeddings
-
+    #print("✅ Loaded face ")
 #known_faces, known_embeddings = load_known_faces()
 load_known_faces()
 # =====================
@@ -69,6 +70,7 @@ def cosine_similarity(a, b):
 # START WEBCAM
 # =====================
 def start_webcam(cameras):
+    place=["libraray","coridor","ground","canteen"]
     if not cameras:
             st.info("No cameras available. Please add one first.")
     else:
@@ -134,6 +136,26 @@ def start_webcam(cameras):
                             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
                             cv2.putText(frame, f"{label} ({best_score:.2f})", (x1, y1 - 10),
                                     cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 255, 0), 3)
+                            
+                            if label not in track and cam_location not in place:
+                                row=get_student_by_roll(label)
+                                track.append(label)
+                                if row:
+                                    sid, name1, roll, dept, year, photo_path, updated = row
+                                    write_attendance(roll, name1, datetime.now(), "Present")
+                                else:
+                                    print("❌ No student record found for this roll.")
+
+                            elif label not in track and  cam_location in place:
+                                row=get_student_by_roll(label)
+                                track1.append(label)
+                                if row:
+                                    sid, name1, roll, dept, year, photo_path, updated = row
+                                    write_remark(roll, name1, datetime.now(),cam_location)
+
+
+
+
                         else:
                             label = "Unknown"
                             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0,255), 2)
@@ -141,21 +163,21 @@ def start_webcam(cameras):
                                     cv2.FONT_HERSHEY_SIMPLEX, 1.6, (0, 0, 255), 3)
 
 
-                        if label not in track and cam_location not in place: 
-                            row=get_student_by_roll(label)
-                            track.append(label)
-                            if row:
-                                sid, name1, roll, dept, year, photo_path, updated = row
-                                write_attendance(roll, name1, datetime.now(), "Present")
-                            else:
-                                print("❌ No student record found for this roll.")
+                        #if label not in track and cam_location not in place: 
+                         #   row=get_student_by_roll(label)
+                          #  track.append(label)
+                           # if row:
+                            #    sid, name1, roll, dept, year, photo_path, updated = row
+                             #   write_attendance(roll, name1, datetime.now(), "Present")
+                           # else:
+                            #    print("❌ No student record found for this roll.")
                         #write_attendance(row[1],row[0],datetime.now(),"Present")
-                        elif label not in track and  cam_location in place:
-                            row=get_student_by_roll(label)
-                            track1.append(label)
-                            if row:
-                                sid, name1, roll, dept, year, photo_path, updated = row
-                                write_remark(roll, name1, datetime.now(),cam_location)
+                       # elif label not in track and  cam_location in place:
+                        #    row=get_student_by_roll(label)
+                         #   track1.append(label)
+                          #  if row:
+                           #     sid, name1, roll, dept, year, photo_path, updated = row
+                            #    write_remark(roll, name1, datetime.now(),cam_location)
 
 
                     cv2.putText(frame, f"Faces: {len(faces)}", (10, 30),
